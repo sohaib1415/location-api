@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Town;
 use App\Model\Area;
+use App\Http\Resources\AreaCollection;
+use App\Http\Resources\AreaResource;
 use Illuminate\Http\Request;
 
 class AreaController extends Controller
@@ -12,9 +15,11 @@ class AreaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Town $town)
     {
-        //
+        //return new AreaCollection(Area::all());
+        dd($town);
+        return new $town->areas;
     }
 
     /**

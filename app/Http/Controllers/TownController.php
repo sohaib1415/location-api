@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Town;
+use App\Http\Resources\Town\TownCollection;
 use App\Http\Resources\Town\TownResource;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,8 @@ class TownController extends Controller
      */
     public function index()
     {
-        //
+        return new TownCollection(Town::all());
+        return  Town::collection(Town::all());
     }
 
     /**
