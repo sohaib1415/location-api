@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Town;
+use App\Http\Resources\Town\TownResource;
 use Illuminate\Http\Request;
 
 class TownController extends Controller
@@ -46,7 +47,7 @@ class TownController extends Controller
      */
     public function show(Town $town)
     {
-        //
+        return new TownResource($town);
     }
 
     /**
