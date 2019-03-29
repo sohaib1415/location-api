@@ -17,6 +17,10 @@ class TownResource extends JsonResource
         return [
             'name'      => $this->title,
             'details'   => $this->description,
+            'href'      => 
+            [
+                'areas' => route('areas.index',$this->id)
+            ]
         ];
     }
 }
