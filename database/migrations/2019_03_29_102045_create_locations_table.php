@@ -16,10 +16,10 @@ class CreateLocationsTable extends Migration
         Schema::create('locations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('number');
-            $table->string('letter')->nullable();
-            $table->string('longitude');
-            $table->string('latitude');
-            $table->string('description')->nullable();
+            $table->string('letter', 1000)->nullable();
+            $table->string('longitude', 50);
+            $table->string('latitude', 50);
+            $table->string('description', 1000)->nullable();
             //$table->integer('area_id')->unsigned()->index();
             $table->unsignedBigInteger('area_id');
             $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade');
