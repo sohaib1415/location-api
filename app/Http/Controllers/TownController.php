@@ -6,6 +6,8 @@ use App\Model\Town;
 use App\Http\Resources\Town\TownCollection;
 use App\Http\Resources\Town\TownResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class TownController extends Controller
 {
@@ -16,8 +18,9 @@ class TownController extends Controller
      */
     public function index()
     {
-        return new TownCollection(Town::all());
-        return  Town::collection(Town::all());
+        return view('index');
+        //return new TownCollection(Town::all());
+        //return  Town::collection(Town::all());
     }
 
     /**
@@ -27,7 +30,7 @@ class TownController extends Controller
      */
     public function create()
     {
-        //
+        return view('towns\create');
     }
 
     /**
@@ -38,7 +41,34 @@ class TownController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validator = Validator::make($request->all(),[
+            'title'=>'required|string',
+            'description'=>'string'
+
+        ]);
+
+        if ($validator->fails()) {
+
+            return response()->json(['error' => $validator->errors()], 401);
+        }
+
+        try{
+            DB::beginTransaction();
+
+            $town_model =   new Town();
+            $town_model->title =   $request->title;
+            if(isset($request->description))
+            $town_model->description=$request->description;
+            $town_model->save();
+            DB::commit();
+            return redirect('home')->with('status', 'Town is successfully added!');
+        }
+        catch(\Exception $e){
+            //dd();
+            DB::rollback();
+            return response()->json($e,500);
+        }
     }
 
     /**

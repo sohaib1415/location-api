@@ -16,12 +16,15 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::apiResource('/towns', 'TownController');
+
 Route::group(['prefix' => 'towns'], function () {
     Route::apiResource('/{towns}/areas', 'AreaController');
     Route::group(['prefix' => 'areas'], function () {
-        Route::apiResource('/{towns}/{areas}/location', 'LocationController');
+
     });
 });
+//Route::apiResource('/location', 'LocationController');
+Route::get('/findArea', 'AreaController@getTownAreas');
+Route::get('/findLocation', 'LocationController@findLocation');
 
 

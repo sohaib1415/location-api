@@ -11,8 +11,4 @@ class Location extends Model
     {
         return $this->belongsTo(Area::class);
     }
-    public function Location()
-    {
-        return $this->hasMany(Area::class);
-    }
 }

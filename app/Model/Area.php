@@ -12,7 +12,7 @@ class Area extends Model
     {
         return $this->belongsTo(Town::class);
     }
-    public function Location()
+    public function Locations()
     {
         return $this->hasMany(Location::class);
     }
