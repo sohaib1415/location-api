@@ -18,9 +18,9 @@ class TownController extends Controller
      */
     public function index()
     {
-        return view('index');
-        //return new TownCollection(Town::all());
-        //return  Town::collection(Town::all());
+        //return view('index');
+        return new TownCollection(Town::all());
+        return  Town::collection(Town::all());
     }
 
     /**

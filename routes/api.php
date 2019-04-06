@@ -24,6 +24,9 @@ Route::group(['prefix' => 'towns'], function () {
     });
 });
 //Route::apiResource('/location', 'LocationController');
+Route::get('/town', 'TownController@index');
+Route::get('/area', 'AreaController@index');
+Route::get('/location', 'LocationController@index');
 Route::get('/findArea', 'AreaController@getTownAreas');
 Route::get('/findLocation', 'LocationController@findLocation');
 

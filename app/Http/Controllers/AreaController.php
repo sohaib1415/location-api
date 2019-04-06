@@ -20,7 +20,6 @@ class AreaController extends Controller
     public function index(Town $town)
     {
         return new AreaCollection(Area::all());
-        dd($town);
         return new $town->areas;
     }
     public function getTownAreas(Request $request)
@@ -32,14 +31,32 @@ class AreaController extends Controller
             return response()->json(['error' => $validator->errors()], 401);
         }
         $get_town   =   Town::find($request->town_id);
-        $get_Area   =   $get_town->areas();
-        echo count($get_town);
-        dd();
-        if($get_Area)
-           // if(count($get_Area)>1)
-                return new AreaResource($get_Area);
+        if (!isset($get_town)) {
+            return response()->json(['error' => "wrong town id provided"], 404);
+        }
         else
-            return response()->json(['error' => "no area found"], 401);
+        {
+            $get_Area   =   $get_town->areas()->get();
+
+            if (!isset($get_Area)) {
+                return response()->json(['error' => "no data found"], 404);
+            }
+            else
+            {
+                $arr= array();
+                $i=0;
+                foreach ($get_Area as $data){
+                    $arr[$i]['title']         =  $data->title;
+                    $arr[$i]['description']   =  $data->description;
+                    $arr[$i]['locations']    =  $data->location;
+                   // $arr[$i]=$data->title;
+                    $i++;
+                }
+                if(sizeof($arr) > 0)
+                    return response()->json($arr);
+                else return response()->json(['error' => "no data found"],200);
+            }
+        }
     }
     /**
      * Show the form for creating a new resource.

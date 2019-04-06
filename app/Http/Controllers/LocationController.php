@@ -31,7 +31,11 @@ class LocationController extends Controller
         }
         $get_location   =   Location::where('area_id',$request->area_id)->where('number', $request->number)->first();
         //dd($get_location);
-        return new LocationResource($get_location);
+        if (!isset($get_location)) {
+            return response()->json(['error' => "no data found"], 404);
+        }
+        else
+            return new LocationResource($get_location);
 
     }
 
